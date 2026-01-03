@@ -55,32 +55,65 @@
 </footer>
 
 <script>
-// Products data
 const products = [
-  { name: "El DUCE Signature Hoodie", price: 90 },
-  { name: "El DUCE Essential Tee", price: 45 },
-  { name: "El DUCE Street Pants", price: 110 }
+  {
+    name: "El DUCE Signature Hoodie",
+    price: 90,
+    image: null
+  },
+  {
+    name: "El DUCE Essential Tee",
+    price: 45,
+    image: {
+      front: "images/essential-tee-front.png",
+      back: "images/essential-tee-back.png"
+    }
+  },
+  {
+    name: "El DUCE Street Pants",
+    price: 110,
+    image: null
+  }
 ];
 
 const cart = [];
 const productsDiv = document.getElementById('products');
 const cartCount = document.getElementById('cart-count');
 
-// Render products
-products.forEach((p, i) => {
+products.forEach(p => {
   const card = document.createElement('div');
   card.className = 'bg-white/5 border-white/10 rounded-2xl p-6 text-center';
-  card.innerHTML = `
+
+  let imageHTML = `
     <div class="h-48 bg-white/10 rounded-xl mb-4"></div>
+  `;
+
+  if (p.image) {
+    imageHTML = `
+      <div class="relative h-48 mb-4">
+        <img src="${p.image.front}"
+             class="absolute inset-0 h-full w-full object-contain rounded-xl transition-opacity duration-300"
+             />
+        <img src="${p.image.back}"
+             class="absolute inset-0 h-full w-full object-contain rounded-xl opacity-0 hover:opacity-100 transition-opacity duration-300"
+             />
+      </div>
+    `;
+  }
+
+  card.innerHTML = `
+    ${imageHTML}
     <h4 class="text-xl font-semibold">${p.name}</h4>
     <p class="text-white/70">$${p.price} CAD</p>
     <button class="mt-4 bg-white text-black px-4 py-2 rounded-xl">Add to Cart</button>
   `;
+
   card.querySelector('button').addEventListener('click', () => {
     cart.push(p);
     cartCount.textContent = 'Cart: ' + cart.length;
     alert(p.name + ' added to cart!');
   });
+
   productsDiv.appendChild(card);
 });
 </script>

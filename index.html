@@ -69,33 +69,18 @@
 
   <script>
     const products = [
-      { name: "El DUCE Signature Hoodie", price: 90, image: null },
-      {
-        name: "El DUCE Essential Tee",
-        price: 45,
-        image: { front: "images/essential-tee-front.png", back: "images/essential-tee-back.png" }
-      },
-      {
-        name: "El DUCE Street Pants",
-        price: 110,
-        image: { front: "images/street-pants.png" }
-      },
-      {
-        name: "El DUCE Beanie",
-        price: 30,
-        image: { front: "images/beanie.png" }
-      },
-      {
-        name: "El DUCE Belt",
-        price: 55,
-        image: { front: "images/belt.png" }
-      },
-      {
-        name: "El DUCE Puffer Vest",
-        price: 140,
-        image: { front: "images/puffer-vest-front.png", back: "images/puffer-vest-back.png" }
-      }
-    ];
+  { slug: "signature-hoodie", name: "El DUCE Signature Hoodie", price: 90, image: null },
+  {
+    slug: "essential-tee",
+    name: "El DUCE Essential Tee",
+    price: 45,
+    image: { front: "images/essential-tee-front.png", back: "images/essential-tee-back.png" }
+  },
+  { slug: "street-pants", name: "El DUCE Street Pants", price: 110, image: { front: "images/street-pants.png" } },
+  { slug: "beanie", name: "El DUCE Beanie", price: 30, image: { front: "images/beanie.png" } },
+  { slug: "belt", name: "El DUCE Belt", price: 55, image: { front: "images/belt.png" } },
+  { slug: "puffer-vest", name: "El DUCE Puffer Vest", price: 140, image: { front: "images/puffer-vest-front.png", back: "images/puffer-vest-back.png" } }
+];
 
     const cart = [];
     const productsDiv = document.getElementById("products");

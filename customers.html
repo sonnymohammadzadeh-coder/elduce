@@ -26,34 +26,39 @@
   </main>
 
   <script>
-    // Put your customer photos in: images/customers/
-    // Then list them here:
-    const photos = [
-     const photos = [
-  { src: "images/customers/customer-1.jpg", name: "Customer 1", item: "Essential Tee" },
-  { src: "images/customers/customer-2.jpg", name: "Customer 2", item: "Signature Hoodie" },
-  { src: "images/customers/customer-3.jpg", name: "Customer 3", item: "Puffer Vest" },
+  const photos = [
+    { src: "images/customers/customer-1.jpg", name: "Customer 1", item: "Essential Tee" },
+    { src: "images/customers/customer-2.jpg", name: "Customer 2", item: "Signature Hoodie" },
+    { src: "images/customers/customer-3.jpg", name: "Customer 3", item: "Puffer Vest" },
+    { src: "images/customers/customer-4.jpg", name: "Customer 4", item: "Favelas Tee" },
+    { src: "images/customers/customer-5.jpg", name: "Customer 5", item: "Favelas Shorts" },
+    { src: "images/customers/customer-6.jpg", name: "Customer 6", item: "Favelas Bucket Hat" }
+  ];
 
-  // NEW SLOTS
-  { src: "images/customers/customer-4.jpg", name: "Customer 4", item: "Favelas Tee" },
-  { src: "images/customers/customer-5.jpg", name: "Customer 5", item: "Favelas Shorts" },
-  { src: "images/customers/customer-6.jpg", name: "Customer 6", item: "Favelas Bucket Hat" }
-];
+  const gallery = document.getElementById("gallery");
 
-    const gallery = document.getElementById("gallery");
+  photos.forEach(p => {
+    const card = document.createElement("div");
+    card.className =
+      "bg-white/5 border border-white/10 rounded-2xl overflow-hidden flex flex-col";
 
-    photos.forEach(p => {
-      const card = document.createElement("div");
-      card.className = "bg-white/5 border border-white/10 rounded-2xl overflow-hidden";
-      card.innerHTML = `
-        <img src="${p.src}" alt="${p.name}" class="w-full h-72 object-contain bg-black" />
-        <div class="p-4">
-          <p class="font-semibold">${p.name}</p>
-          <p class="text-white/70 text-sm">${p.item}</p>
-        </div>
-      `;
-      gallery.appendChild(card);
-    });
-  </script>
+    card.innerHTML = `
+      <div class="h-72 bg-black flex items-center justify-center">
+        <img
+          src="${p.src}"
+          alt="${p.name}"
+          class="max-h-full max-w-full object-contain"
+          onerror="this.style.display='none'"
+        />
+      </div>
+      <div class="p-4 text-center">
+        <p class="font-semibold">${p.name}</p>
+        <p class="text-white/70 text-sm">${p.item}</p>
+      </div>
+    `;
+
+    gallery.appendChild(card);
+  });
+</script>
 </body>
 </html>

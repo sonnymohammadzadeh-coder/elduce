@@ -19,11 +19,11 @@
   <!-- Navbar -->
   <nav class="flex items-center justify-between px-8 py-6 border-b border-white/10">
     <div class="flex flex-col leading-tight">
-  <h1 class="text-2xl font-bold tracking-widest">EL DUCE</h1>
-  <a href="deals.html" class="text-sm opacity-80 hover:opacity-100 underline">
-    Deals & Offers
-  </a>
-</div>
+      <h1 class="text-2xl font-bold tracking-widest">EL DUCE</h1>
+      <a href="deals.html" class="text-sm opacity-80 hover:opacity-100 underline">
+        Deals & Offers
+      </a>
+    </div>
     <div class="flex gap-6 items-center">
       <a href="#shop">Shop</a>
       <a href="customers.html">Happy Little Customers</a>
@@ -34,10 +34,8 @@
 
   <!-- Hero -->
   <section class="relative h-screen flex items-center justify-center text-center px-6">
-    <!-- Dark overlay for readability -->
     <div class="absolute inset-0 bg-black/65"></div>
 
-    <!-- Content -->
     <div class="relative z-10 fade-up">
       <h2 class="text-6xl font-extrabold mb-6">POWER. STYLE. EL DUCE.</h2>
       <p class="text-white/70 mb-8">Luxury streetwear engineered for dominance.</p>
@@ -75,30 +73,56 @@
 
   <script>
     const products = [
-  {
-  slug: "signature-hoodie",
-  name: "EL DUCE Signature Hoodie",
-  price: 90,
-  image: {
-    front: "images/signature-hoodie.png",
-    back: "images/signature-hoodie-back.png"
-  }
-},
-      
-    slug: "essential-tee",
-    name: "El DUCE Essential Tee",
-    price: 45,
-    image: { front: "images/essential-tee-front.png", back: "images/essential-tee-back.png" }
-  },
-  { slug: "street-pants", name: "El DUCE Street Pants", price: 110, image: { front: "images/street-pants.png" } },
-  { slug: "beanie", name: "El DUCE Beanie", price: 30, image: { front: "images/beanie.png" } },
-  { slug: "belt", name: "El DUCE Belt", price: 55, image: { front: "images/belt.png" } },
-  { slug: "puffer-vest", name: "El DUCE Puffer Vest", price: 140, image: { front: "images/puffer-vest-front.png", back: "images/puffer-vest-back.png" } }
-];
+      {
+        slug: "signature-hoodie",
+        name: "EL DUCE Signature Hoodie",
+        price: 90,
+        image: {
+          front: "images/signature-hoodie.png",
+          back: "images/signature-hoodie-back.png"
+        }
+      },
+      {
+        slug: "essential-tee",
+        name: "El DUCE Essential Tee",
+        price: 45,
+        image: {
+          front: "images/essential-tee-front.png",
+          back: "images/essential-tee-back.png"
+        }
+      },
+      {
+        slug: "street-pants",
+        name: "El DUCE Street Pants",
+        price: 110,
+        image: { front: "images/street-pants.png" }
+      },
+      {
+        slug: "beanie",
+        name: "El DUCE Beanie",
+        price: 30,
+        image: { front: "images/beanie.png" }
+      },
+      {
+        slug: "belt",
+        name: "El DUCE Belt",
+        price: 55,
+        image: { front: "images/belt.png" }
+      },
+      {
+        slug: "puffer-vest",
+        name: "El DUCE Puffer Vest",
+        price: 140,
+        image: {
+          front: "images/puffer-vest-front.png",
+          back: "images/puffer-vest-back.png"
+        }
+      }
+    ];
 
     function goProduct(slug) {
-  window.location.href = `product.html?id=${encodeURIComponent(slug)}`;
-}
+      window.location.href = `product.html?id=${encodeURIComponent(slug)}`;
+    }
 
     const cart = [];
     const productsDiv = document.getElementById("products");
@@ -132,13 +156,13 @@
       }
 
       card.innerHTML = `
-  <div class="cursor-pointer" onclick="goProduct('${p.slug}')">
-    ${imageHTML}
-    <h4 class="text-xl font-semibold">${p.name}</h4>
-    <p class="text-white/70">$${p.price} CAD</p>
-  </div>
-  <button class="mt-4 bg-white text-black px-4 py-2 rounded-xl">Add to Cart</button>
-`;
+        <div class="cursor-pointer" onclick="goProduct('${p.slug}')">
+          ${imageHTML}
+          <h4 class="text-xl font-semibold">${p.name}</h4>
+          <p class="text-white/70">$${p.price} CAD</p>
+        </div>
+        <button class="mt-4 bg-white text-black px-4 py-2 rounded-xl">Add to Cart</button>
+      `;
 
       card.querySelector("button").addEventListener("click", () => {
         cart.push(p);

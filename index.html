@@ -82,6 +82,10 @@
   { slug: "puffer-vest", name: "El DUCE Puffer Vest", price: 140, image: { front: "images/puffer-vest-front.png", back: "images/puffer-vest-back.png" } }
 ];
 
+    function goProduct(slug) {
+  window.location.href = `product.html?id=${encodeURIComponent(slug)}`;
+}
+
     const cart = [];
     const productsDiv = document.getElementById("products");
     const cartCount = document.getElementById("cart-count");

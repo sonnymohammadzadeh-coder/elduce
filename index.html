@@ -4,143 +4,146 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>El DUCE</title>
-  <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Framer Motion substitute: simple animation -->
   <style>
     .fade-up { opacity: 0; transform: translateY(20px); animation: fadeUp 1s forwards; }
     @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
   </style>
 </head>
+
 <body class="bg-black text-white font-sans">
 
-<!-- Navbar -->
-<nav class="flex items-center justify-between px-8 py-6 border-b border-white/10">
-  <h1 class="text-2xl font-bold tracking-widest">EL DUCE</h1>
-  <div class="flex gap-6 items-center">
-    <a href="#shop">Shop</a>
-    <a href="#about">About</a>
-    <span id="cart-count" class="ml-2">Cart: 0</span>
-  </div>
-</nav>
+  <!-- Navbar -->
+  <nav class="flex items-center justify-between px-8 py-6 border-b border-white/10">
+    <h1 class="text-2xl font-bold tracking-widest">EL DUCE</h1>
+    <div class="flex gap-6 items-center">
+      <a href="#shop">Shop</a>
+      <a href="#about">About</a>
+      <span id="cart-count" class="ml-2">Cart: 0</span>
+    </div>
+  </nav>
 
-<!-- Hero -->
-<section class="h-screen flex items-center justify-center text-center px-6">
-  <div class="fade-up">
-    <h2 class="text-6xl font-extrabold mb-6">POWER. STYLE. EL DUCE.</h2>
-    <p class="text-white/70 mb-8">Luxury streetwear engineered for dominance.</p>
-    <button class="bg-white text-black px-8 py-4 rounded-2xl" onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'})">Shop Collection</button>
-  </div>
-</section>
+  <!-- Hero (WITH BACKGROUND IMAGE + OVERLAY) -->
+  <section
+    class="relative h-screen flex items-center justify-center text-center px-6 bg-center bg-cover"
+    style="background-image: url('images/hero-bg.jpg');"
+  >
+    <!-- Dark overlay for readability -->
+    <div class="absolute inset-0 bg-black/65"></div>
 
-<!-- Shop -->
-<section id="shop" class="px-8 py-20">
-  <h3 class="text-3xl font-bold mb-10">Shop</h3>
-  <div class="grid md:grid-cols-3 gap-8" id="products"></div>
-</section>
+    <!-- Content -->
+    <div class="relative z-10 fade-up">
+      <h2 class="text-6xl font-extrabold mb-6">POWER. STYLE. EL DUCE.</h2>
+      <p class="text-white/70 mb-8">Luxury streetwear engineered for dominance.</p>
+      <button
+        class="bg-white text-black px-8 py-4 rounded-2xl"
+        onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'})"
+      >
+        Shop Collection
+      </button>
+    </div>
+  </section>
 
-<!-- About -->
-<section id="about" class="px-8 py-20">
-  <h3 class="text-3xl font-bold mb-6">About El DUCE</h3>
-  <p class="max-w-2xl text-white/70">
-    El DUCE is a luxury streetwear brand rooted in power, discipline, and elite presence.
-    Every piece is designed to command respect the moment you step into a room.
-  </p>
-</section>
+  <!-- Shop -->
+  <section id="shop" class="px-8 py-20">
+    <h3 class="text-3xl font-bold mb-10">Shop</h3>
+    <div class="grid md:grid-cols-3 gap-8" id="products"></div>
+  </section>
 
-<!-- Footer -->
-<footer class="px-8 py-10 border-t border-white/10 flex justify-between items-center">
-  <p class="opacity-60">© 2026 El DUCE</p>
-  <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/87/87390.png" class="w-6 h-6" alt="Instagram"></a>
-</footer>
+  <!-- About -->
+  <section id="about" class="px-8 py-20">
+    <h3 class="text-3xl font-bold mb-6">About El DUCE</h3>
+    <p class="max-w-2xl text-white/70">
+      El DUCE is a luxury streetwear brand rooted in power, discipline, and elite presence.
+      Every piece is designed to command respect the moment you step into a room.
+    </p>
+  </section>
 
-<script>
-const products = [
-  {
-    name: "El DUCE Signature Hoodie",
-    price: 90,
-    image: null
-  },
-  {
-    name: "El DUCE Essential Tee",
-    price: 45,
-    image: {
-      front: "images/essential-tee-front.png",
-      back: "images/essential-tee-back.png"
-    }
-  },
-  {
-    name: "El DUCE Street Pants",
-    price: 110,
-    image: {
-      front: "images/street-pants.png"
-    }
-  },
-  {
-    name: "El DUCE Beanie",
-    price: 30,
-    image: {
-      front: "images/beanie.png"
-    }
-  },
-  {
-    name: "El DUCE Belt",
-    price: 55,
-    image: {
-      front: "images/belt.png"
-    }
-  },
-  {
-    name: "El DUCE Puffer Vest",
-    price: 140,
-    image: {
-      front: "images/puffer-vest-front.png",
-      back: "images/puffer-vest-back.png"
-    }
-  }
-];
+  <!-- Footer -->
+  <footer class="px-8 py-10 border-t border-white/10 flex justify-between items-center">
+    <p class="opacity-60">© 2026 El DUCE</p>
+    <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/87/87390.png" class="w-6 h-6" alt="Instagram"></a>
+  </footer>
 
-const cart = [];
-const productsDiv = document.getElementById('products');
-const cartCount = document.getElementById('cart-count');
+  <script>
+    const products = [
+      { name: "El DUCE Signature Hoodie", price: 90, image: null },
+      {
+        name: "El DUCE Essential Tee",
+        price: 45,
+        image: { front: "images/essential-tee-front.png", back: "images/essential-tee-back.png" }
+      },
+      {
+        name: "El DUCE Street Pants",
+        price: 110,
+        image: { front: "images/street-pants.png" }
+      },
+      {
+        name: "El DUCE Beanie",
+        price: 30,
+        image: { front: "images/beanie.png" }
+      },
+      {
+        name: "El DUCE Belt",
+        price: 55,
+        image: { front: "images/belt.png" }
+      },
+      {
+        name: "El DUCE Puffer Vest",
+        price: 140,
+        image: { front: "images/puffer-vest-front.png", back: "images/puffer-vest-back.png" }
+      }
+    ];
 
-products.forEach(p => {
-  const card = document.createElement('div');
-  card.className = 'bg-white/5 border-white/10 rounded-2xl p-6 text-center';
+    const cart = [];
+    const productsDiv = document.getElementById('products');
+    const cartCount = document.getElementById('cart-count');
 
-  let imageHTML = `
-    <div class="h-48 bg-white/10 rounded-xl mb-4"></div>
-  `;
+    products.forEach(p => {
+      const card = document.createElement('div');
+      card.className = 'bg-white/5 border-white/10 rounded-2xl p-6 text-center';
 
-  if (p.image) {
-    imageHTML = `
-      <div class="relative h-48 mb-4">
-        <img src="${p.image.front}"
-             class="absolute inset-0 h-full w-full object-contain rounded-xl transition-opacity duration-300"
-             />
-        <img src="${p.image.back}"
-             class="absolute inset-0 h-full w-full object-contain rounded-xl opacity-0 hover:opacity-100 transition-opacity duration-300"
-             />
-      </div>
-    `;
-  }
+      let imageHTML = `<div class="h-48 bg-white/10 rounded-xl mb-4"></div>`;
 
-  card.innerHTML = `
-    ${imageHTML}
-    <h4 class="text-xl font-semibold">${p.name}</h4>
-    <p class="text-white/70">$${p.price} CAD</p>
-    <button class="mt-4 bg-white text-black px-4 py-2 rounded-xl">Add to Cart</button>
-  `;
+      if (p.image && p.image.front) {
+        if (p.image.back) {
+          // Front + back (hover swap)
+          imageHTML = `
+            <div class="relative h-48 mb-4">
+              <img src="${p.image.front}"
+                   alt="${p.name}"
+                   class="absolute inset-0 h-full w-full object-contain rounded-xl transition-opacity duration-300" />
+              <img src="${p.image.back}"
+                   alt="${p.name} (back)"
+                   class="absolute inset-0 h-full w-full object-contain rounded-xl opacity-0 hover:opacity-100 transition-opacity duration-300" />
+            </div>
+          `;
+        } else {
+          // Front only
+          imageHTML = `
+            <img src="${p.image.front}"
+                 alt="${p.name}"
+                 class="h-48 w-full object-contain rounded-xl mb-4" />
+          `;
+        }
+      }
 
-  card.querySelector('button').addEventListener('click', () => {
-    cart.push(p);
-    cartCount.textContent = 'Cart: ' + cart.length;
-    alert(p.name + ' added to cart!');
-  });
+      card.innerHTML = `
+        ${imageHTML}
+        <h4 class="text-xl font-semibold">${p.name}</h4>
+        <p class="text-white/70">$${p.price} CAD</p>
+        <button class="mt-4 bg-white text-black px-4 py-2 rounded-xl">Add to Cart</button>
+      `;
 
-  productsDiv.appendChild(card);
-});
-</script>
+      card.querySelector('button').addEventListener('click', () => {
+        cart.push(p);
+        cartCount.textContent = 'Cart: ' + cart.length;
+        alert(p.name + ' added to cart!');
+      });
+
+      productsDiv.appendChild(card);
+    });
+  </script>
 
 </body>
 </html>

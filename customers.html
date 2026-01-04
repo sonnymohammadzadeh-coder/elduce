@@ -1,1 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>El DUCE — Happy Little Customers</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
 
+<body class="bg-black text-white font-sans min-h-screen">
+  <!-- Navbar -->
+  <nav class="flex items-center justify-between px-8 py-6 border-b border-white/10">
+    <a href="index.html" class="text-2xl font-bold tracking-widest">EL DUCE</a>
+    <div class="flex gap-6 items-center">
+      <a href="index.html#shop">Shop</a>
+      <a href="checkout.html">Checkout</a>
+    </div>
+  </nav>
+
+  <main class="px-8 py-12">
+    <h1 class="text-4xl font-extrabold mb-2">Happy Little Customers</h1>
+    <p class="text-white/70 mb-10">Real people wearing El DUCE. Send a pic to get featured.</p>
+
+    <!-- Gallery -->
+    <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-6" id="gallery"></div>
+  </main>
+
+  <script>
+    // Put your customer photos in: images/customers/
+    // Then list them here:
+    const photos = [
+      { src: "images/customers/customer-1.jpg", name: "Customer 1", item: "Essential Tee" },
+      { src: "images/customers/customer-2.jpg", name: "Customer 2", item: "Signature Hoodie" },
+      { src: "images/customers/customer-3.jpg", name: "Customer 3", item: "Puffer Vest" }
+    ];
+
+    const gallery = document.getElementById("gallery");
+
+    photos.forEach(p => {
+      const card = document.createElement("div");
+      card.className = "bg-white/5 border border-white/10 rounded-2xl overflow-hidden";
+      card.innerHTML = `
+        <img src="${p.src}" alt="${p.name}" class="w-full h-72 object-cover" />
+        <div class="p-4">
+          <p class="font-semibold">${p.name}</p>
+          <p class="text-white/70 text-sm">${p.item}</p>
+        </div>
+      `;
+      gallery.appendChild(card);
+    });
+  </script>
+</body>
+</html>

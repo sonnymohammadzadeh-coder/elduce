@@ -6,8 +6,17 @@
   <title>El DUCE</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    .fade-up { opacity: 0; transform: translateY(20px); animation: fadeUp 1s forwards; }
-    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+    .fade-up {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 1s forwards;
+    }
+    @keyframes fadeUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
   </style>
 </head>
 
@@ -35,13 +44,12 @@
   <!-- Hero -->
   <section class="relative h-screen flex items-center justify-center text-center px-6">
     <div class="absolute inset-0 bg-black/65"></div>
-
     <div class="relative z-10 fade-up">
       <h2 class="text-6xl font-extrabold mb-6">POWER. STYLE. EL DUCE.</h2>
       <p class="text-white/70 mb-8">Luxury streetwear engineered for dominance.</p>
       <button
         class="bg-white text-black px-8 py-4 rounded-2xl"
-        onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'})"
+        onclick="document.getElementById('shop').scrollIntoView({ behavior: 'smooth' })"
       >
         Shop Collection
       </button>
@@ -67,7 +75,11 @@
   <footer class="px-8 py-10 border-t border-white/10 flex justify-between items-center">
     <p class="opacity-60">© 2026 El DUCE</p>
     <a href="#">
-      <img src="https://cdn-icons-png.flaticon.com/512/87/87390.png" class="w-6 h-6" alt="Instagram" />
+      <img
+        src="https://cdn-icons-png.flaticon.com/512/87/87390.png"
+        class="w-6 h-6"
+        alt="Instagram"
+      />
     </a>
   </footer>
 
@@ -130,28 +142,34 @@
 
     products.forEach(p => {
       const card = document.createElement("div");
-      card.className = "bg-white/5 border border-white/10 rounded-2xl p-6 text-center";
+      card.className =
+        "bg-white/5 border border-white/10 rounded-2xl p-6 text-center";
 
       let imageHTML = `<div class="h-48 bg-white/10 rounded-xl mb-4"></div>`;
 
       if (p.image && p.image.front) {
         if (p.image.back) {
           imageHTML = `
-            <div class="relative h-48 mb-4">
-              <img src="${p.image.front}"
-                   alt="${p.name}"
-                   class="absolute inset-0 h-full w-full object-contain rounded-xl transition-opacity duration-300" />
-              <img src="${p.image.back}"
-                   alt="${p.name} (back)"
-                   class="absolute inset-0 h-full w-full object-contain rounded-xl opacity-0 hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
-
+            <div class="relative h-48 mb-4 group">
+              <img
+                src="${p.image.front}"
+                alt="${p.name}"
+                class="absolute inset-0 h-full w-full object-contain rounded-xl transition-opacity duration-300 group-hover:opacity-0"
+              />
+              <img
+                src="${p.image.back}"
+                alt="${p.name} back"
+                class="absolute inset-0 h-full w-full object-contain rounded-xl opacity-0 transition-opacity duration-300 group-hover:opacity-100 pointer-events-none"
+              />
             </div>
           `;
         } else {
           imageHTML = `
-            <img src="${p.image.front}"
-                 alt="${p.name}"
-                 class="h-48 w-full object-contain rounded-xl mb-4" />
+            <img
+              src="${p.image.front}"
+              alt="${p.name}"
+              class="h-48 w-full object-contain rounded-xl mb-4"
+            />
           `;
         }
       }
@@ -162,7 +180,9 @@
           <h4 class="text-xl font-semibold">${p.name}</h4>
           <p class="text-white/70">$${p.price} CAD</p>
         </div>
-        <button class="mt-4 bg-white text-black px-4 py-2 rounded-xl">Add to Cart</button>
+        <button class="mt-4 bg-white text-black px-4 py-2 rounded-xl">
+          Add to Cart
+        </button>
       `;
 
       card.querySelector("button").addEventListener("click", () => {

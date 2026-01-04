@@ -118,11 +118,13 @@
       }
 
       card.innerHTML = `
-        ${imageHTML}
-        <h4 class="text-xl font-semibold">${p.name}</h4>
-        <p class="text-white/70">$${p.price} CAD</p>
-        <button class="mt-4 bg-white text-black px-4 py-2 rounded-xl">Add to Cart</button>
-      `;
+  <div class="cursor-pointer" onclick="goProduct('${p.slug}')">
+    ${imageHTML}
+    <h4 class="text-xl font-semibold">${p.name}</h4>
+    <p class="text-white/70">$${p.price} CAD</p>
+  </div>
+  <button class="mt-4 bg-white text-black px-4 py-2 rounded-xl">Add to Cart</button>
+`;
 
       card.querySelector("button").addEventListener("click", () => {
         cart.push(p);

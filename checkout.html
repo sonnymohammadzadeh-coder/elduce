@@ -1,1 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>El DUCE — Checkout</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-black text-white font-sans min-h-screen">
 
+  <nav class="flex items-center justify-between px-8 py-6 border-b border-white/10">
+    <a href="index.html" class="text-2xl font-bold tracking-widest">EL DUCE</a>
+    <a href="index.html#shop" class="opacity-80 hover:opacity-100">Back to shop</a>
+  </nav>
+
+  <main class="px-8 py-10 max-w-3xl">
+    <h1 class="text-4xl font-extrabold mb-6">Checkout</h1>
+
+    <div id="items" class="space-y-3"></div>
+
+    <div class="mt-8 flex items-center justify-between border-t border-white/10 pt-6">
+      <p class="text-xl">Total: <span id="total" class="font-bold"></span></p>
+      <button id="payBtn" class="bg-white text-black px-6 py-3 rounded-2xl font-semibold">
+        Checkout
+      </button>
+    </div>
+
+    <button id="clearBtn" class="mt-4 opacity-70 hover:opacity-100 underline">Clear cart</button>
+  </main>
+
+  <script>
+    const itemsEl = document.getElementById("items");
+    const totalEl = document.getElementById("total");
+    const payBtn = document.getElementById("payBtn");
+    const clearBtn = document.getElementById("clearBtn");
+
+    function render() {
+      const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+      itemsEl.innerHTML = "";
+
+      if (cart.length === 0) {
+        itemsEl.innerHTML = `<p class="opacity-60">Your cart is empty.</p>`;
+        totalEl.textContent = "$0 CAD";
+        payBtn.disabled = true;
+        payBtn.classList.add("opacity-50");
+        return;
+      }
+
+      let total = 0;
+      cart.forEach((it, idx) => {
+        total += it.price * it.qty;
+        const row = document.createElement("div");
+        row.className = "flex justify-between items-center bg-white/5 border border-white/10 rounded-2xl p-4";
+        row.innerHTML = `
+          <div>
+            <p class="font-semibold">${it.name}</p>
+            <p class="opacity-70 text-sm">Color: ${it.color || "—"}</p>
+          </div>
+          <div class="flex gap-3 items-center">
+            <span>$${it.price} CAD</span>
+            <button class="underline opacity-70 hover:opacity-100">Remove</button>
+          </div>
+        `;
+        row.querySelector("button").onclick = () => {
+          cart.splice(idx, 1);
+          localStorage.setItem("cart", JSON.stringify(cart));
+          render();
+        };
+        itemsEl.appendChild(row);
+      });
+
+      totalEl.textContent = `$${total} CAD`;
+      payBtn.disabled = false;
+      payBtn.classList.remove("opacity-50");
+    }
+
+    // Easiest real checkout on a static site:
+    // Use Stripe Payment Links and put your link here:
+    const STRIPE_PAYMENT_LINK = ""; // e.g. "https://buy.stripe.com/xxxx"
+
+    payBtn.onclick = () => {
+      if (!STRIPE_PAYMENT_LINK) {
+        alert("Checkout not connected yet. When you're ready, add a Stripe Payment Link in checkout.html.");
+        return;
+      }
+      window.location.href = STRIPE_PAYMENT_LINK;
+    };
+
+    clearBtn.onclick = () => {
+      localStorage.removeItem("cart");
+      render();
+    };
+
+    render();
+  </script>
+</body>
+</html>

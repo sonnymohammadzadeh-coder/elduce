@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>El DUCE</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
@@ -13,7 +13,7 @@
 
 <body
   class="text-white font-sans bg-cover bg-center bg-fixed"
-  style="background-image: url('images/hero-bg.webp');"
+  style="background-image: url('images/hero-bp.webp');"
 >
 
   <!-- Navbar -->
@@ -26,10 +26,8 @@
     </div>
   </nav>
 
-  <!-- Hero (WITH BACKGROUND IMAGE + OVERLAY) -->
-  <section
-    <section class="relative h-screen flex items-center justify-center text-center px-6">
-  >
+  <!-- Hero -->
+  <section class="relative h-screen flex items-center justify-center text-center px-6">
     <!-- Dark overlay for readability -->
     <div class="absolute inset-0 bg-black/65"></div>
 
@@ -64,7 +62,9 @@
   <!-- Footer -->
   <footer class="px-8 py-10 border-t border-white/10 flex justify-between items-center">
     <p class="opacity-60">© 2026 El DUCE</p>
-    <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/87/87390.png" class="w-6 h-6" alt="Instagram"></a>
+    <a href="#">
+      <img src="https://cdn-icons-png.flaticon.com/512/87/87390.png" class="w-6 h-6" alt="Instagram" />
+    </a>
   </footer>
 
   <script>
@@ -98,18 +98,17 @@
     ];
 
     const cart = [];
-    const productsDiv = document.getElementById('products');
-    const cartCount = document.getElementById('cart-count');
+    const productsDiv = document.getElementById("products");
+    const cartCount = document.getElementById("cart-count");
 
     products.forEach(p => {
-      const card = document.createElement('div');
-      card.className = 'bg-white/5 border-white/10 rounded-2xl p-6 text-center';
+      const card = document.createElement("div");
+      card.className = "bg-white/5 border border-white/10 rounded-2xl p-6 text-center";
 
       let imageHTML = `<div class="h-48 bg-white/10 rounded-xl mb-4"></div>`;
 
       if (p.image && p.image.front) {
         if (p.image.back) {
-          // Front + back (hover swap)
           imageHTML = `
             <div class="relative h-48 mb-4">
               <img src="${p.image.front}"
@@ -121,7 +120,6 @@
             </div>
           `;
         } else {
-          // Front only
           imageHTML = `
             <img src="${p.image.front}"
                  alt="${p.name}"
@@ -137,10 +135,10 @@
         <button class="mt-4 bg-white text-black px-4 py-2 rounded-xl">Add to Cart</button>
       `;
 
-      card.querySelector('button').addEventListener('click', () => {
+      card.querySelector("button").addEventListener("click", () => {
         cart.push(p);
-        cartCount.textContent = 'Cart: ' + cart.length;
-        alert(p.name + ' added to cart!');
+        cartCount.textContent = "Cart: " + cart.length;
+        alert(p.name + " added to cart!");
       });
 
       productsDiv.appendChild(card);

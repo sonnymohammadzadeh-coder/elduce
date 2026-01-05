@@ -1,299 +1,137 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>EL DUCE — Product</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
+const PRODUCTS = [
+  // ===== MAIN STORE =====
+  {
+    slug: "signature-hoodie",
+    name: "EL DUCE Signature Hoodie",
+    price: 90,
+    badge: "Core Drop",
+    images: [
+      "images/signature-hoodie.png",
+      "images/signature-hoodie-back.png",
+      "images/signature-hoodie-side.png",
+      "images/signature-hoodie-detail.png"
+    ]
+  },
+  {
+    slug: "essential-tee",
+    name: "EL DUCE Essential Tee",
+    price: 45,
+    badge: "Core Drop",
+    images: [
+      "images/essential-tee-front.png",
+      "images/essential-tee-back.png",
+      "images/essential-tee-side.png",
+      "images/essential-tee-detail.png"
+    ]
+  },
+  {
+    slug: "street-pants",
+    name: "EL DUCE Street Pants",
+    price: 110,
+    badge: "Core Drop",
+    images: [
+      "images/street-pants.png",
+      "images/street-pants-back.png",
+      "images/street-pants-side.png",
+      "images/street-pants-detail.png"
+    ]
+  },
+  {
+    slug: "beanie",
+    name: "EL DUCE Beanie",
+    price: 30,
+    badge: "Core Drop",
+    images: [
+      "images/beanie.png",
+      "images/beanie-side.png",
+      "images/beanie-back.png",
+      "images/beanie-detail.png"
+    ]
+  },
+  {
+    slug: "belt",
+    name: "EL DUCE Belt",
+    price: 55,
+    badge: "Core Drop",
+    images: [
+      "images/belt.png",
+      "images/belt-close.png",
+      "images/belt-side.png",
+      "images/belt-detail.png"
+    ]
+  },
+  {
+    slug: "puffer-vest",
+    name: "EL DUCE Puffer Vest",
+    price: 140,
+    badge: "Core Drop",
+    images: [
+      "images/puffer-vest-front.png",
+      "images/puffer-vest-back.png",
+      "images/puffer-vest-side.png",
+      "images/puffer-vest-detail.png"
+    ]
+  },
 
-<body class="bg-black text-white font-sans min-h-screen">
-
-  <!-- Navbar -->
-  <nav class="flex items-center justify-between px-8 py-6 border-b border-white/10">
-    <a href="index.html" class="text-2xl font-bold tracking-widest">EL DUCE</a>
-    <div class="flex gap-6 items-center">
-      <a href="index.html#shop">Shop</a>
-      <a href="brazil.html">Brazil</a>
-      <a href="checkout.html" class="opacity-80 hover:opacity-100">Checkout</a>
-      <span id="cart-count" class="ml-2">Cart: 0</span>
-    </div>
-  </nav>
-
-  <main class="px-8 py-12">
-    <div id="not-found" class="hidden max-w-xl mx-auto text-center">
-      <h1 class="text-3xl font-bold mb-3">Product not found</h1>
-      <p class="text-white/70 mb-6">This item doesn’t exist (or the link is wrong).</p>
-      <a href="index.html#shop" class="inline-block bg-white text-black px-6 py-3 rounded-2xl">Back to shop</a>
-    </div>
-
-    <div id="product-wrap" class="hidden max-w-5xl mx-auto grid md:grid-cols-2 gap-10">
-      <!-- Left: images -->
-      <div>
-        <div class="bg-white/5 border border-white/10 rounded-2xl p-4">
-          <img id="main-img" src="" alt="" class="w-full h-[420px] object-contain rounded-xl bg-black" />
-        </div>
-
-        <div id="thumbs" class="mt-4 flex gap-3 flex-wrap"></div>
-      </div>
-
-      <!-- Right: details -->
-      <div>
-        <p id="badge" class="inline-flex items-center gap-2 text-xs font-semibold px-3 py-1 rounded-full bg-white/10 border border-white/10 w-fit mb-4"></p>
-
-        <h1 id="name" class="text-4xl font-extrabold mb-3"></h1>
-        <p id="price" class="text-white/70 text-lg mb-6"></p>
-
-        <div class="bg-white/5 border border-white/10 rounded-2xl p-6">
-          <label class="block text-sm text-white/70 mb-2">Size</label>
-          <select id="size" class="w-full bg-black border border-white/10 rounded-xl px-4 py-3 mb-5">
-            <option value="S">Small</option>
-            <option value="M" selected>Medium</option>
-            <option value="L">Large</option>
-            <option value="XL">XL</option>
-          </select>
-
-          <label class="block text-sm text-white/70 mb-2">Quantity</label>
-          <div class="flex items-center gap-3 mb-6">
-            <button id="qty-minus" class="bg-white/10 border border-white/10 rounded-xl px-4 py-2">−</button>
-            <span id="qty" class="min-w-10 text-center text-lg">1</span>
-            <button id="qty-plus" class="bg-white/10 border border-white/10 rounded-xl px-4 py-2">+</button>
-          </div>
-
-          <button id="add-cart" class="w-full bg-white text-black px-6 py-3 rounded-2xl font-semibold">
-            Add to Cart
-          </button>
-
-          <button id="go-checkout" class="w-full mt-3 bg-white/10 border border-white/10 px-6 py-3 rounded-2xl font-semibold">
-            Go to Checkout
-          </button>
-
-          <p class="text-xs text-white/50 mt-4">
-            Tip: Add more photos by adding filenames to the <code>images</code> list for that product.
-          </p>
-        </div>
-      </div>
-    </div>
-  </main>
-
-  <script>
-    // ----- PRODUCTS (Add/edit here) -----
-    // Put multiple angles in images: []
-    const PRODUCTS = [
-      // Main store
-      {
-        slug: "signature-hoodie",
-        name: "EL DUCE Signature Hoodie",
-        price: 90,
-        badge: "Core Drop",
-        images: [
-          "images/signature-hoodie.png",
-          "images/signature-hoodie-back.png"
-        ]
-      },
-      {
-        slug: "essential-tee",
-        name: "EL DUCE Essential Tee",
-        price: 45,
-        badge: "Core Drop",
-        images: [
-          "images/essential-tee-front.png",
-          "images/essential-tee-back.png"
-        ]
-      },
-      {
-        slug: "street-pants",
-        name: "EL DUCE Street Pants",
-        price: 110,
-        badge: "Core Drop",
-        images: [
-          "images/street-pants.png"
-        ]
-      },
-      {
-        slug: "beanie",
-        name: "EL DUCE Beanie",
-        price: 30,
-        badge: "Core Drop",
-        images: [
-          "images/beanie.png"
-        ]
-      },
-      {
-        slug: "belt",
-        name: "EL DUCE Belt",
-        price: 55,
-        badge: "Core Drop",
-        images: [
-          "images/belt.png"
-        ]
-      },
-      {
-        slug: "puffer-vest",
-        name: "EL DUCE Puffer Vest",
-        price: 140,
-        badge: "Core Drop",
-        images: [
-          "images/puffer-vest-front.png",
-          "images/puffer-vest-back.png"
-        ]
-      },
-
-      // Brazil section
-      {
-        slug: "favelas-tee",
-        name: "EL DUCE Favelas Tee",
-        price: 40,
-        badge: "Brazil 🇧🇷",
-        images: [
-          images: [
-            "images/favelas-tee.png",
-            "images/favelas-tee-back.png",
-            "images/favelas-tee-side.png",
-            "images/favelas-tee-detail.png"
-          ] 
-      },
-      {
-        slug: "favelas-shorts",
-        name: "EL DUCE Favelas Shorts",
-        price: 30,
-        badge: "Brazil 🇧🇷",
-        images: [
-          "images/favelas-shorts.png"
-        ]
-      },
-      {
-        slug: "favelas-bucket-hat",
-        name: "EL DUCE Favelas Bucket Hat",
-        price: 20,
-        badge: "Brazil 🇧🇷",
-        images: [
-          "images/favelas-bucket-hat.png"
-        ]
-      },
-      {
-        slug: "favelas-tee-2",
-        name: "EL DUCE Favelas Tee 2",
-        price: 40,
-        badge: "Brazil 🇧🇷",
-        images: [
-          "images/favelas-tee-2.png"
-        ]
-      },
-      {
-        slug: "favelas-shorts-2",
-        name: "EL DUCE Favelas Shorts 2",
-        price: 30,
-        badge: "Brazil 🇧🇷",
-        images: [
-          "images/favelas-shorts-2.png"
-        ]
-      }
-    ];
-
-    // ----- Helpers -----
-    function getParam(name) {
-      const url = new URL(window.location.href);
-      return url.searchParams.get(name);
-    }
-
-    function loadCart() {
-      try { return JSON.parse(localStorage.getItem("elduce_cart") || "[]"); }
-      catch { return []; }
-    }
-
-    function saveCart(cart) {
-      localStorage.setItem("elduce_cart", JSON.stringify(cart));
-    }
-
-    function updateCartCount() {
-      const cart = loadCart();
-      document.getElementById("cart-count").textContent = "Cart: " + cart.reduce((n, i) => n + (i.qty || 1), 0);
-    }
-
-    function setMainImage(src, alt) {
-      const img = document.getElementById("main-img");
-      img.src = src;
-      img.alt = alt;
-    }
-
-    // ----- Page logic -----
-    const id = getParam("id");
-    const product = PRODUCTS.find(p => p.slug === id);
-
-    const wrap = document.getElementById("product-wrap");
-    const notFound = document.getElementById("not-found");
-
-    if (!product) {
-      notFound.classList.remove("hidden");
-      updateCartCount();
-    } else {
-      wrap.classList.remove("hidden");
-
-      document.getElementById("name").textContent = product.name;
-      document.getElementById("price").textContent = `$${product.price} CAD`;
-      document.getElementById("badge").textContent = product.badge || "EL DUCE";
-
-      // Images + thumbnails
-      const images = (product.images || []).filter(Boolean);
-      const thumbs = document.getElementById("thumbs");
-
-      // Fallback image if none provided
-      const first = images[0] || "images/hero-bp.webp";
-      setMainImage(first, product.name);
-
-      images.forEach((src, idx) => {
-        const btn = document.createElement("button");
-        btn.className = "bg-white/5 border border-white/10 rounded-xl p-2 hover:bg-white/10 transition";
-        btn.innerHTML = `<img src="${src}" alt="${product.name} ${idx+1}" class="w-20 h-20 object-contain rounded-lg bg-black" />`;
-        btn.addEventListener("click", () => setMainImage(src, product.name));
-        thumbs.appendChild(btn);
-      });
-
-      // Quantity
-      let qty = 1;
-      const qtyEl = document.getElementById("qty");
-      document.getElementById("qty-minus").addEventListener("click", () => {
-        qty = Math.max(1, qty - 1);
-        qtyEl.textContent = qty;
-      });
-      document.getElementById("qty-plus").addEventListener("click", () => {
-        qty = qty + 1;
-        qtyEl.textContent = qty;
-      });
-
-      // Add to cart
-      document.getElementById("add-cart").addEventListener("click", () => {
-        const size = document.getElementById("size").value;
-        const cart = loadCart();
-
-        // Merge same product+size
-        const existing = cart.find(i => i.slug === product.slug && i.size === size);
-        if (existing) existing.qty = (existing.qty || 1) + qty;
-        else {
-          cart.push({
-            slug: product.slug,
-            name: product.name,
-            price: product.price,
-            size,
-            qty,
-            image: images[0] || ""
-          });
-        }
-
-        saveCart(cart);
-        updateCartCount();
-        alert(`${product.name} added to cart!`);
-      });
-
-      // Go to checkout
-      document.getElementById("go-checkout").addEventListener("click", () => {
-        window.location.href = "checkout.html";
-      });
-
-      updateCartCount();
-    }
-  </script>
-
-</body>
-</html>
+  // ===== BRAZIL COLLECTION =====
+  {
+    slug: "favelas-tee",
+    name: "EL DUCE Favelas Tee",
+    price: 40,
+    badge: "Brazil 🇧🇷",
+    images: [
+      "images/favelas-tee.png",
+      "images/favelas-tee-back.png",
+      "images/favelas-tee-side.png",
+      "images/favelas-tee-detail.png"
+    ]
+  },
+  {
+    slug: "favelas-shorts",
+    name: "EL DUCE Favelas Shorts",
+    price: 30,
+    badge: "Brazil 🇧🇷",
+    images: [
+      "images/favelas-shorts.png",
+      "images/favelas-shorts-back.png",
+      "images/favelas-shorts-side.png",
+      "images/favelas-shorts-detail.png"
+    ]
+  },
+  {
+    slug: "favelas-bucket-hat",
+    name: "EL DUCE Favelas Bucket Hat",
+    price: 20,
+    badge: "Brazil 🇧🇷",
+    images: [
+      "images/favelas-bucket-hat.png",
+      "images/favelas-bucket-hat-side.png",
+      "images/favelas-bucket-hat-top.png",
+      "images/favelas-bucket-hat-detail.png"
+    ]
+  },
+  {
+    slug: "favelas-tee-2",
+    name: "EL DUCE Favelas Tee 2",
+    price: 40,
+    badge: "Brazil 🇧🇷",
+    images: [
+      "images/favelas-tee-2.png",
+      "images/favelas-tee-2-back.png",
+      "images/favelas-tee-2-side.png",
+      "images/favelas-tee-2-detail.png"
+    ]
+  },
+  {
+    slug: "favelas-shorts-2",
+    name: "EL DUCE Favelas Shorts 2",
+    price: 30,
+    badge: "Brazil 🇧🇷",
+    images: [
+      "images/favelas-shorts-2.png",
+      "images/favelas-shorts-2-back.png",
+      "images/favelas-shorts-2-side.png",
+      "images/favelas-shorts-2-detail.png"
+    ]
+  }
+];

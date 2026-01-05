@@ -3,116 +3,296 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>El DUCE — Product</title>
+  <title>EL DUCE — Product</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
+
 <body class="bg-black text-white font-sans min-h-screen">
 
+  <!-- Navbar -->
   <nav class="flex items-center justify-between px-8 py-6 border-b border-white/10">
     <a href="index.html" class="text-2xl font-bold tracking-widest">EL DUCE</a>
-    <a href="checkout.html" class="opacity-80 hover:opacity-100">Checkout</a>
+    <div class="flex gap-6 items-center">
+      <a href="index.html#shop">Shop</a>
+      <a href="brazil.html">Brazil</a>
+      <a href="checkout.html" class="opacity-80 hover:opacity-100">Checkout</a>
+      <span id="cart-count" class="ml-2">Cart: 0</span>
+    </div>
   </nav>
 
-  <main class="px-8 py-10 grid md:grid-cols-2 gap-10">
-    <!-- Gallery -->
-    <div>
-      <img id="mainImg" class="w-full h-[420px] object-contain bg-white/5 rounded-2xl" alt="" />
-      <div id="thumbs" class="grid grid-cols-3 gap-3 mt-4"></div>
+  <main class="px-8 py-12">
+    <div id="not-found" class="hidden max-w-xl mx-auto text-center">
+      <h1 class="text-3xl font-bold mb-3">Product not found</h1>
+      <p class="text-white/70 mb-6">This item doesn’t exist (or the link is wrong).</p>
+      <a href="index.html#shop" class="inline-block bg-white text-black px-6 py-3 rounded-2xl">Back to shop</a>
     </div>
 
-    <!-- Info -->
-    <div>
-      <h1 id="title" class="text-4xl font-extrabold mb-3"></h1>
-      <p id="price" class="text-white/70 mb-6"></p>
+    <div id="product-wrap" class="hidden max-w-5xl mx-auto grid md:grid-cols-2 gap-10">
+      <!-- Left: images -->
+      <div>
+        <div class="bg-white/5 border border-white/10 rounded-2xl p-4">
+          <img id="main-img" src="" alt="" class="w-full h-[420px] object-contain rounded-xl bg-black" />
+        </div>
 
-      <div class="mb-6">
-        <p class="font-semibold mb-2">Colour</p>
-        <div id="colors" class="flex gap-2 flex-wrap"></div>
+        <div id="thumbs" class="mt-4 flex gap-3 flex-wrap"></div>
       </div>
 
-      <button id="addBtn" class="bg-white text-black px-6 py-3 rounded-2xl font-semibold">
-        Add to Cart
-      </button>
+      <!-- Right: details -->
+      <div>
+        <p id="badge" class="inline-flex items-center gap-2 text-xs font-semibold px-3 py-1 rounded-full bg-white/10 border border-white/10 w-fit mb-4"></p>
 
-      <p class="text-white/60 mt-6">
-        Tip: Add your angle images in <span class="font-mono">images/products/&lt;slug&gt;/&lt;color&gt;/1.webp</span> etc.
-      </p>
+        <h1 id="name" class="text-4xl font-extrabold mb-3"></h1>
+        <p id="price" class="text-white/70 text-lg mb-6"></p>
+
+        <div class="bg-white/5 border border-white/10 rounded-2xl p-6">
+          <label class="block text-sm text-white/70 mb-2">Size</label>
+          <select id="size" class="w-full bg-black border border-white/10 rounded-xl px-4 py-3 mb-5">
+            <option value="S">Small</option>
+            <option value="M" selected>Medium</option>
+            <option value="L">Large</option>
+            <option value="XL">XL</option>
+          </select>
+
+          <label class="block text-sm text-white/70 mb-2">Quantity</label>
+          <div class="flex items-center gap-3 mb-6">
+            <button id="qty-minus" class="bg-white/10 border border-white/10 rounded-xl px-4 py-2">−</button>
+            <span id="qty" class="min-w-10 text-center text-lg">1</span>
+            <button id="qty-plus" class="bg-white/10 border border-white/10 rounded-xl px-4 py-2">+</button>
+          </div>
+
+          <button id="add-cart" class="w-full bg-white text-black px-6 py-3 rounded-2xl font-semibold">
+            Add to Cart
+          </button>
+
+          <button id="go-checkout" class="w-full mt-3 bg-white/10 border border-white/10 px-6 py-3 rounded-2xl font-semibold">
+            Go to Checkout
+          </button>
+
+          <p class="text-xs text-white/50 mt-4">
+            Tip: Add more photos by adding filenames to the <code>images</code> list for that product.
+          </p>
+        </div>
+      </div>
     </div>
   </main>
 
   <script>
-    // Edit/add products here (slugs must match your folders)
-    const PRODUCTS = {
-      "essential-tee": { name: "El DUCE Essential Tee", price: 45, colors: ["black", "white"], angles: [1,2,3] },
-      "street-pants": { name: "El DUCE Street Pants", price: 110, colors: ["black"], angles: [1,2,3] },
-      "signature-hoodie": { name: "El DUCE Signature Hoodie", price: 90, colors: ["black"], angles: [1,2,3] },
-      "beanie": { name: "El DUCE Beanie", price: 30, colors: ["black"], angles: [1,2,3] },
-      "belt": { name: "El DUCE Belt", price: 55, colors: ["black"], angles: [1,2,3] },
-      "puffer-vest": { name: "El DUCE Puffer Vest", price: 140, colors: ["black"], angles: [1,2,3] },
-    };
+    // ----- PRODUCTS (Add/edit here) -----
+    // Put multiple angles in images: []
+    const PRODUCTS = [
+      // Main store
+      {
+        slug: "signature-hoodie",
+        name: "EL DUCE Signature Hoodie",
+        price: 90,
+        badge: "Core Drop",
+        images: [
+          "images/signature-hoodie.png",
+          "images/signature-hoodie-back.png"
+        ]
+      },
+      {
+        slug: "essential-tee",
+        name: "EL DUCE Essential Tee",
+        price: 45,
+        badge: "Core Drop",
+        images: [
+          "images/essential-tee-front.png",
+          "images/essential-tee-back.png"
+        ]
+      },
+      {
+        slug: "street-pants",
+        name: "EL DUCE Street Pants",
+        price: 110,
+        badge: "Core Drop",
+        images: [
+          "images/street-pants.png"
+        ]
+      },
+      {
+        slug: "beanie",
+        name: "EL DUCE Beanie",
+        price: 30,
+        badge: "Core Drop",
+        images: [
+          "images/beanie.png"
+        ]
+      },
+      {
+        slug: "belt",
+        name: "EL DUCE Belt",
+        price: 55,
+        badge: "Core Drop",
+        images: [
+          "images/belt.png"
+        ]
+      },
+      {
+        slug: "puffer-vest",
+        name: "EL DUCE Puffer Vest",
+        price: 140,
+        badge: "Core Drop",
+        images: [
+          "images/puffer-vest-front.png",
+          "images/puffer-vest-back.png"
+        ]
+      },
 
-    const params = new URLSearchParams(location.search);
-    const slug = params.get("id");
-    const product = PRODUCTS[slug];
+      // Brazil section
+      {
+        slug: "favelas-tee",
+        name: "EL DUCE Favelas Tee",
+        price: 40,
+        badge: "Brazil 🇧🇷",
+        images: [
+          "images/favelas-tee.png"
+          // Add more angles like:
+          // "images/favelas-tee-back.png",
+          // "images/favelas-tee-side.png"
+        ]
+      },
+      {
+        slug: "favelas-shorts",
+        name: "EL DUCE Favelas Shorts",
+        price: 30,
+        badge: "Brazil 🇧🇷",
+        images: [
+          "images/favelas-shorts.png"
+        ]
+      },
+      {
+        slug: "favelas-bucket-hat",
+        name: "EL DUCE Favelas Bucket Hat",
+        price: 20,
+        badge: "Brazil 🇧🇷",
+        images: [
+          "images/favelas-bucket-hat.png"
+        ]
+      },
+      {
+        slug: "favelas-tee-2",
+        name: "EL DUCE Favelas Tee 2",
+        price: 40,
+        badge: "Brazil 🇧🇷",
+        images: [
+          "images/favelas-tee-2.png"
+        ]
+      },
+      {
+        slug: "favelas-shorts-2",
+        name: "EL DUCE Favelas Shorts 2",
+        price: 30,
+        badge: "Brazil 🇧🇷",
+        images: [
+          "images/favelas-shorts-2.png"
+        ]
+      }
+    ];
+
+    // ----- Helpers -----
+    function getParam(name) {
+      const url = new URL(window.location.href);
+      return url.searchParams.get(name);
+    }
+
+    function loadCart() {
+      try { return JSON.parse(localStorage.getItem("elduce_cart") || "[]"); }
+      catch { return []; }
+    }
+
+    function saveCart(cart) {
+      localStorage.setItem("elduce_cart", JSON.stringify(cart));
+    }
+
+    function updateCartCount() {
+      const cart = loadCart();
+      document.getElementById("cart-count").textContent = "Cart: " + cart.reduce((n, i) => n + (i.qty || 1), 0);
+    }
+
+    function setMainImage(src, alt) {
+      const img = document.getElementById("main-img");
+      img.src = src;
+      img.alt = alt;
+    }
+
+    // ----- Page logic -----
+    const id = getParam("id");
+    const product = PRODUCTS.find(p => p.slug === id);
+
+    const wrap = document.getElementById("product-wrap");
+    const notFound = document.getElementById("not-found");
 
     if (!product) {
-      document.body.innerHTML = `<div class="p-10">Product not found. <a class="underline" href="index.html">Back</a></div>`;
-      throw new Error("Missing product");
-    }
+      notFound.classList.remove("hidden");
+      updateCartCount();
+    } else {
+      wrap.classList.remove("hidden");
 
-    let currentColor = product.colors[0];
+      document.getElementById("name").textContent = product.name;
+      document.getElementById("price").textContent = `$${product.price} CAD`;
+      document.getElementById("badge").textContent = product.badge || "EL DUCE";
 
-    const titleEl = document.getElementById("title");
-    const priceEl = document.getElementById("price");
-    const mainImg = document.getElementById("mainImg");
-    const thumbs = document.getElementById("thumbs");
-    const colors = document.getElementById("colors");
-    const addBtn = document.getElementById("addBtn");
+      // Images + thumbnails
+      const images = (product.images || []).filter(Boolean);
+      const thumbs = document.getElementById("thumbs");
 
-    titleEl.textContent = product.name;
-    priceEl.textContent = `$${product.price} CAD`;
+      // Fallback image if none provided
+      const first = images[0] || "images/hero-bp.webp";
+      setMainImage(first, product.name);
 
-    function imgPath(angle) {
-      return `images/products/${slug}/${currentColor}/${angle}.webp`;
-    }
-
-    function renderThumbs() {
-      thumbs.innerHTML = "";
-      product.angles.forEach((a) => {
-        const b = document.createElement("button");
-        b.className = "bg-white/5 rounded-xl overflow-hidden border border-white/10 hover:border-white/30";
-        b.innerHTML = `<img src="${imgPath(a)}" class="w-full h-24 object-contain" alt="">`;
-        b.onclick = () => (mainImg.src = imgPath(a));
-        thumbs.appendChild(b);
-      });
-      mainImg.src = imgPath(product.angles[0]);
-      mainImg.alt = `${product.name} - ${currentColor}`;
-    }
-
-    function renderColors() {
-      colors.innerHTML = "";
-      product.colors.forEach((c) => {
+      images.forEach((src, idx) => {
         const btn = document.createElement("button");
-        btn.className = `px-4 py-2 rounded-xl border ${c === currentColor ? "border-white" : "border-white/20"} bg-white/5`;
-        btn.textContent = c.toUpperCase();
-        btn.onclick = () => {
-          currentColor = c;
-          renderColors();
-          renderThumbs();
-        };
-        colors.appendChild(btn);
+        btn.className = "bg-white/5 border border-white/10 rounded-xl p-2 hover:bg-white/10 transition";
+        btn.innerHTML = `<img src="${src}" alt="${product.name} ${idx+1}" class="w-20 h-20 object-contain rounded-lg bg-black" />`;
+        btn.addEventListener("click", () => setMainImage(src, product.name));
+        thumbs.appendChild(btn);
       });
+
+      // Quantity
+      let qty = 1;
+      const qtyEl = document.getElementById("qty");
+      document.getElementById("qty-minus").addEventListener("click", () => {
+        qty = Math.max(1, qty - 1);
+        qtyEl.textContent = qty;
+      });
+      document.getElementById("qty-plus").addEventListener("click", () => {
+        qty = qty + 1;
+        qtyEl.textContent = qty;
+      });
+
+      // Add to cart
+      document.getElementById("add-cart").addEventListener("click", () => {
+        const size = document.getElementById("size").value;
+        const cart = loadCart();
+
+        // Merge same product+size
+        const existing = cart.find(i => i.slug === product.slug && i.size === size);
+        if (existing) existing.qty = (existing.qty || 1) + qty;
+        else {
+          cart.push({
+            slug: product.slug,
+            name: product.name,
+            price: product.price,
+            size,
+            qty,
+            image: images[0] || ""
+          });
+        }
+
+        saveCart(cart);
+        updateCartCount();
+        alert(`${product.name} added to cart!`);
+      });
+
+      // Go to checkout
+      document.getElementById("go-checkout").addEventListener("click", () => {
+        window.location.href = "checkout.html";
+      });
+
+      updateCartCount();
     }
-
-    addBtn.onclick = () => {
-      const cart = JSON.parse(localStorage.getItem("cart") || "[]");
-      cart.push({ slug, name: product.name, price: product.price, color: currentColor, qty: 1 });
-      localStorage.setItem("cart", JSON.stringify(cart));
-      alert("Added to cart!");
-    };
-
-    renderColors();
-    renderThumbs();
   </script>
+
 </body>
 </html>
